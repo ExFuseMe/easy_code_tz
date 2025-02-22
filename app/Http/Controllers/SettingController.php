@@ -2,65 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\SettingAction;
+use App\Factories\VerificationMethodFactory;
+use App\Http\Requests\ConfirmSettingsRequest;
 use App\Http\Requests\StoreSettingRequest;
 use App\Http\Requests\UpdateSettingRequest;
 use App\Models\Setting;
+use App\Models\SettingChangeRequest;
+use Carbon\Carbon;
 
 class SettingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    private SettingAction $action;
+
+    public function __construct()
     {
-        //
+        $this->action = new SettingAction();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreSettingRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Setting $setting)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Setting $setting)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateSettingRequest $request, Setting $setting)
     {
-        //
+        $this->authorize('update', $setting);
+        $validated = $request->validated();
+        $code = $this->action->change($setting, $validated);
+        return response()->json(['message' => 'Подтвердите изменение настройки', 'код для тестирования' => $code]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Setting $setting)
+    public function confirmChange(ConfirmSettingsRequest $request, Setting $setting)
     {
-        //
+        $this->authorize('update', $setting);
+        $validated = $request->validated();
+
+        $response = $this->action->confirm($setting, $validated);
+
+        return $response;
     }
 }

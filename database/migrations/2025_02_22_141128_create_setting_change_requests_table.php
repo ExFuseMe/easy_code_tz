@@ -20,8 +20,10 @@ return new class extends Migration
             $table->string('old_value');
             $table->string('new_value');
             $table->string('verification_code');
-
+            $table->boolean('is_verified')->default(false);
+            $table->timestamp('expired_at');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

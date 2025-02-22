@@ -2,27 +2,17 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\MethodsEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateSettingRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return false;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
-            //
+            'verification_method' => ['required', Rule::enum(MethodsEnum::class)],
+            'new_value' => ['required', 'string'],
         ];
     }
 }
