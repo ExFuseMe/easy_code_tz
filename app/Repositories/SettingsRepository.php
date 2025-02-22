@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Repositories\coreRepository;
 use App\Models\Setting as Model;
 class SettingsRepository extends coreRepository
 {

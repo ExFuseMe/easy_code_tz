@@ -2,8 +2,6 @@
 
 namespace App\Factories;
 
-use InvalidArgumentException;
-
 abstract class VerificationMethodFactory
 {
     public int $code;

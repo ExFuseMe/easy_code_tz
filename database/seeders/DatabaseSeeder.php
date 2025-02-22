@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Enums\MethodsEnum;
 use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Database\Seeder;
