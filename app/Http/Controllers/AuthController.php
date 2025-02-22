@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Api\User\LoginAction;
-use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
