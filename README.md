@@ -1,12 +1,13 @@
 # Тесто проект компании EasyCode
 
 ## Установка проекта
+(ВАЖНО: наличие бд easy_code_tz после команды up -d)
 ```bash
 cp .env.example .env
 composer i
 vendor/bin/sail up -d
 vendor/bin/sail artisan key:generate
-vendor/bin/sail migrate --seed
+vendor/bin/sail artisan migrate --seed
 vendor/bin/sail l5-swagger:generate
 ```
 ## Запуск очередей для проверки exception_at у запроса
