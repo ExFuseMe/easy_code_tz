@@ -16,6 +16,31 @@ class SettingController extends Controller
         $this->action = new SettingAction();
     }
 
+
+    /**
+     * @OA\Post (
+     *     path="/api/settings/{setting}",
+     *     summary="Создание нового запроса на обновление настроек",
+     *     tags={"Settings"},
+     *     security={{ "bearerAuth":{} }},
+     *     @OA\Parameter (
+     *          name="setting",
+     *          in="path",
+     *          required=true,
+     *       ),
+     *     @OA\RequestBody(
+     *          required=true,
+     *          @OA\MediaType(
+     *               mediaType="multipart/form-data",
+     *               @OA\Schema(ref="#/components/schemas/UpdateSettingRequest",),
+     *          ),
+     *     ),
+     *     @OA\Response(
+     *          response="200",
+     *          description="Успешно",
+     *     ),
+     * )
+     */
     public function update(UpdateSettingRequest $request, Setting $setting)
     {
         $this->authorize('update', $setting);
@@ -24,6 +49,31 @@ class SettingController extends Controller
         return response()->json(['message' => 'Подтвердите изменение настройки', 'код для тестирования' => $code]);
     }
 
+
+    /**
+     * @OA\Post (
+     *     path="/api/settings/{setting}/confirm",
+     *     summary="Подтверждение запроса на обновление настроек",
+     *     tags={"Settings"},
+     *     security={{ "bearerAuth":{} }},
+     *     @OA\Parameter (
+     *          name="setting",
+     *          in="path",
+     *          required=true,
+     *       ),
+     *     @OA\RequestBody(
+     *          required=true,
+     *          @OA\MediaType(
+     *               mediaType="multipart/form-data",
+     *               @OA\Schema(ref="#/components/schemas/ConfirmSettingRequest",),
+     *          ),
+     *     ),
+     *     @OA\Response(
+     *          response="200",
+     *          description="Успешно",
+     *     ),
+     * )
+     */
     public function confirmChange(ConfirmSettingsRequest $request, Setting $setting)
     {
         $this->authorize('update', $setting);

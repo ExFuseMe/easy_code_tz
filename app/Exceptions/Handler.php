@@ -3,6 +3,10 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -26,5 +30,12 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $e): Response|JsonResponse|RedirectResponse
+    {
+        return response()->json([
+            'message' => $e->getMessage(),
+        ], 422);
     }
 }

@@ -9,6 +9,32 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+    /**
+     * @OA\Post(
+     *     path="/api/login",
+     *     summary="Авторизация",
+     *     tags={"Auth"},
+     *     @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         description="User's email",
+     *         required=true,
+     *         example="test@example.com",
+     *     ),
+     *     @OA\Parameter(
+     *         name="password",
+     *         in="query",
+     *         description="User's password",
+     *         required=true,
+     *         example="password",
+     *     ),
+     *     @OA\Response(response="200", description="Login successful", @OA\JsonContent(
+     *         ref="#/components/schemas/AuthResponseSchema"
+     *     )),
+     *     @OA\Response(response="401", description="Invalid credentials")
+     * )
+     */
+
     public function login(Request $request): JsonResponse
     {
 
@@ -24,6 +50,6 @@ class AuthController extends Controller
         $user = User::whereEmail($request->email)->firstOrFail();
 
         $token = $user->createToken('auth-token');
-        return response()->json(['token' => $token->plainTextToken, 'user' => $user]);
+        return response()->json(['token' => $token->plainTextToken]);
     }
 }

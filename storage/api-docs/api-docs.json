@@ -1,0 +1,175 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Swagger код ТЗ компании easy code",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/documentation": {},
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Авторизация",
+                "operationId": "a3b306d14572d1f4bd6c064b3233e7b8",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "User's email",
+                        "required": true,
+                        "example": "test@example.com"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "User's password",
+                        "required": true,
+                        "example": "password"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthResponseSchema"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/settings/{setting}": {
+            "post": {
+                "tags": [
+                    "Settings"
+                ],
+                "summary": "Создание нового запроса на обновление настроек",
+                "operationId": "883eac11042a5e19967044817eb32604",
+                "parameters": [
+                    {
+                        "name": "setting",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateSettingRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешно"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/settings/{setting}/confirm": {
+            "post": {
+                "tags": [
+                    "Settings"
+                ],
+                "summary": "Подтверждение запроса на обновление настроек",
+                "operationId": "c57f4f16d50656d4cc892178ab8a07a7",
+                "parameters": [
+                    {
+                        "name": "setting",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ConfirmSettingRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешно"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AuthResponseSchema": {
+                "properties": {
+                    "token": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "ConfirmSettingRequest": {
+                "properties": {
+                    "verification_code": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateSettingRequest": {
+                "properties": {
+                    "verification_method": {
+                        "type": "string",
+                        "enum": [
+                            "sms",
+                            "telegram",
+                            "email",
+                            "специально нерабочий вариант"
+                        ]
+                    },
+                    "new_value": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
+        {
+            "name": "Settings",
+            "description": "Settings"
+        }
+    ]
+}
