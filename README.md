@@ -8,7 +8,7 @@ composer i
 vendor/bin/sail up -d
 vendor/bin/sail artisan key:generate
 vendor/bin/sail artisan migrate --seed
-vendor/bin/sail l5-swagger:generate
+vendor/bin/sail artisan l5-swagger:generate
 ```
 ## Запуск очередей для проверки exception_at у запроса
 ```bash
